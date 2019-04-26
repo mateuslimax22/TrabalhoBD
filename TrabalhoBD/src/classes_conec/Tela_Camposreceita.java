@@ -28,7 +28,7 @@ public class Tela_Camposreceita extends JFrame {
 	private JTextField campoNome;
 	private JTextField campoIngre;
 	private JTextField campoQuant;
-	private JTextField Auto;
+	private static String autor;
 
 	/**
 	 * Launch the application.
@@ -37,8 +37,11 @@ public class Tela_Camposreceita extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					
 					Tela_Camposreceita frame = new Tela_Camposreceita();
 					frame.setVisible(true);
+					
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -51,78 +54,96 @@ public class Tela_Camposreceita extends JFrame {
 	 */
 	public Tela_Camposreceita() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 365);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblCadastroRceita = new JLabel("Cadastro Receita");
+		JLabel lblCadastroRceita = new JLabel("Receita");
 		lblCadastroRceita.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblCadastroRceita.setBounds(10, 0, 154, 25);
 		contentPane.add(lblCadastroRceita);
 		
 		JLabel lblNome = new JLabel("Nome:");
-		lblNome.setBounds(45, 39, 31, 14);
+		lblNome.setBounds(10, 39, 31, 14);
 		contentPane.add(lblNome);
 		
 		campoNome = new JTextField();
-		campoNome.setBounds(78, 36, 147, 20);
+		campoNome.setBounds(43, 36, 147, 20);
 		contentPane.add(campoNome);
 		campoNome.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("Ingredientes:");
-		lblNewLabel.setBounds(10, 67, 65, 14);
+		lblNewLabel.setBounds(11, 143, 65, 14);
 		contentPane.add(lblNewLabel);
 		
 		campoIngre = new JTextField();
-		campoIngre.setBounds(78, 67, 147, 20);
+		campoIngre.setBounds(78, 140, 147, 20);
 		contentPane.add(campoIngre);
 		campoIngre.setColumns(10);
 		
 		JLabel lblQuantidade = new JLabel("Quantidade:");
-		lblQuantidade.setBounds(235, 70, 65, 14);
+		lblQuantidade.setBounds(235, 143, 65, 14);
 		contentPane.add(lblQuantidade);
 		
 		campoQuant = new JTextField();
-		campoQuant.setBounds(299, 67, 46, 20);
+		campoQuant.setBounds(299, 140, 46, 20);
 		contentPane.add(campoQuant);
 		campoQuant.setColumns(10);
 		
 		JButton button = new JButton("+");
-		button.setBounds(355, 66, 46, 23);
-		contentPane.add(button);
-		
-		JLabel lblDescri = new JLabel("Modo de Preparo:");
-		lblDescri.setBounds(10, 92, 104, 14);
-		contentPane.add(lblDescri);
-		
-		TextArea campo_mod = new TextArea();
-		campo_mod.setBounds(78, 112, 314, 108);
-		contentPane.add(campo_mod);
-		
-		JButton btnSalvar = new JButton("Salvar");
-		btnSalvar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Connection cone;
 				try {
-					Tela_login objetologin = new Tela_login();
-					Connection cone = Conexao.faz_conexao();
+					cone = Conexao.faz_conexao();
 					String sql ="INSERT INTO ingredientes(nome,quantidade,nomeRe) VALUES (?,?,?)";					
 					PreparedStatement stmt = cone.prepareStatement(sql);
 					stmt.setString(1, campoIngre.getText());
 					stmt.setString(2, campoQuant.getText());
 					stmt.setString(3, campoNome.getText());
 					
+					campoIngre.setText("");
+					campoQuant.setText("");
 					
-					String sql2 ="INSERT INTO receita(email,modoP,nome) VALUES (?,?,?)";					
+				
+
+					stmt.execute();
+					stmt.close();
+					
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				
+			}
+		});
+		button.setBounds(355, 139, 46, 23);
+		contentPane.add(button);
+		
+		JLabel lblDescri = new JLabel("Modo de Preparo:");
+		lblDescri.setBounds(10, 168, 104, 14);
+		contentPane.add(lblDescri);
+		
+		TextArea campo_mod = new TextArea();
+		campo_mod.setBounds(97, 178, 314, 108);
+		contentPane.add(campo_mod);
+		
+		JButton btnSalvar = new JButton("Cadastrar");
+		btnSalvar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					Connection cone = Conexao.faz_conexao();
+					
+					String sql2 ="INSERT INTO receita(modoP,email,nome) VALUES (?,?,?)";					
 					PreparedStatement stmt2 = cone.prepareStatement(sql2);
-					stmt2.setString(1, Auto.getText());
-					stmt2.setString(2, campo_mod.getText());
+					stmt2.setString(1, campo_mod.getText());
+					stmt2.setString(2, autor);
 					stmt2.setString(3, campoNome.getText());
 					
 					stmt2.execute();
-					stmt.execute();
-					stmt.close();
 					stmt2.close();
 					cone.close();
 					
@@ -138,16 +159,43 @@ public class Tela_Camposreceita extends JFrame {
 				
 			}
 		});
-		btnSalvar.setBounds(335, 226, 89, 23);
+		btnSalvar.setBounds(312, 71, 89, 23);
 		contentPane.add(btnSalvar);
 		
-		JLabel lblAutor = new JLabel("Autor Id:");
-		lblAutor.setBounds(235, 39, 46, 14);
-		contentPane.add(lblAutor);
+		JLabel lblIngredientes = new JLabel("Ingredientes");
+		lblIngredientes.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblIngredientes.setBounds(10, 90, 162, 33);
+		contentPane.add(lblIngredientes);
 		
-		Auto = new JTextField();
-		Auto.setBounds(285, 36, 116, 20);
-		contentPane.add(Auto);
-		Auto.setColumns(10);
+		JButton btnFinalizar = new JButton("Finalizar");
+		btnFinalizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Connection cone;
+				try {
+					cone = Conexao.faz_conexao();
+					String sql3 ="UPDATE receita SET modoP= ? where nome= ?";					
+					PreparedStatement stmt3 = cone.prepareStatement(sql3);
+					stmt3.setString(1, campo_mod.getText());
+					stmt3.setString(2, campoNome.getText());
+					
+					stmt3.execute();
+					stmt3.close();
+					cone.close();
+					
+					
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				
+			}
+		});
+		btnFinalizar.setBounds(335, 292, 89, 23);
+		contentPane.add(btnFinalizar);
+	}
+	
+	public void setAutor(String nome){
+		autor=nome;
 	}
 }

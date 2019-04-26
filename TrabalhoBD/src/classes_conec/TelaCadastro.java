@@ -1,19 +1,15 @@
 package classes_conec;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.text.ParseException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.text.DefaultFormatterFactory;
-import javax.swing.text.MaskFormatter;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-import javax.swing.JFormattedTextField;
 import javax.swing.JPasswordField;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -22,7 +18,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
-import javax.swing.ImageIcon;
 
 public class TelaCadastro extends JFrame {
 

@@ -26,6 +26,7 @@ public class Tela_login extends JFrame {
 	private JPanel contentPane;
 	public JTextField caixausu;
 	private JPasswordField caixapass;
+	private String autorlogin;
 
 	/**
 	 * Launch the application.
@@ -111,11 +112,13 @@ public class Tela_login extends JFrame {
 					PreparedStatement stmt = cone.prepareStatement(sql);//transfera a msg sql para o banco
 					stmt.setString(1, caixausu.getText() );//pega o conteudo da caixa usuario
 					stmt.setString(2, new String(caixapass.getPassword()));//pega o conteudo da caixa senha
-					
+					autorlogin=caixausu.getText();
 					ResultSet rs = stmt.executeQuery();//armazena o resultado da consulta em rs
 					
 					if(rs.next()) {
 						Tela_cadasReceita exibir = new Tela_cadasReceita();
+						Tela_Camposreceita receber =new Tela_Camposreceita();
+						receber.setAutor(autorlogin);
 						exibir.setVisible(true);
 						
 						setVisible(false);

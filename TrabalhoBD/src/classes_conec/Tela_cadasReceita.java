@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -25,6 +27,7 @@ public class Tela_cadasReceita extends JFrame {
 	private JPanel contentPane;
 	private JTable table;
 	private JTextField campesq;
+	private String nomeRe;
 
 	/**
 	 * Launch the application.
@@ -76,6 +79,21 @@ public class Tela_cadasReceita extends JFrame {
 		contentPane.add(btnEditar);
 		
 		JButton btnExcluir = new JButton("Excluir");
+		btnExcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int FilaSelect= table.getSelectedRow();
+				
+				if(FilaSelect >=0) {
+					nomeRe = (String)table.getValueAt(table.getSelectedRow(), 0);
+					TelaConfirmacao exibir = new TelaConfirmacao();
+					exibir.setNomeRe(nomeRe);
+					exibir.setVisible(true);
+					
+					setVisible(true);
+				
+				}
+			}
+		});
 		btnExcluir.setBounds(227, 56, 89, 23);
 		contentPane.add(btnExcluir);
 		
@@ -88,13 +106,13 @@ public class Tela_cadasReceita extends JFrame {
 			new Object[][] {
 			},
 			new String[] {
-				"Nome", "Nota"
+				"Nome", "Ingrediente", "Nota"
 			}
 		));
 		scrollPane.setViewportView(table);
 		
 		campesq = new JTextField();
-		campesq.setBounds(404, 57, 190, 20);
+		campesq.setBounds(426, 57, 168, 20);
 		contentPane.add(campesq);
 		campesq.setColumns(10);
 		
@@ -105,7 +123,7 @@ public class Tela_cadasReceita extends JFrame {
 				Connection cone;
 				try {
 					cone = Conexao.faz_conexao();
-					String sql ="SELECT * FROM receita WHERE nome LIKE ?";					
+					String sql ="SELECT receita.nome,ingredientes.nome,receita.nota FROM ingredientes JOIN receita ON ingredientes.nomeRe=receita.nome AND ingredientes.nome LIKE ?";					
 					PreparedStatement stmt = cone.prepareStatement(sql);
 					stmt.setString(1, campesq.getText());
 					
@@ -115,7 +133,7 @@ public class Tela_cadasReceita extends JFrame {
 					modelo.setNumRows(0);
 					
 					while(rs.next()){
-						modelo.addRow(new Object[] {rs.getString("nome")});
+						modelo.addRow(new Object[] {rs.getString("receita.nome"),rs.getString("ingredientes.nome"),rs.getString("receita.nota")});
 						
 						
 					}
@@ -133,5 +151,26 @@ public class Tela_cadasReceita extends JFrame {
 		});
 		btnPesquisar.setBounds(604, 56, 89, 23);
 		contentPane.add(btnPesquisar);
+		
+		JButton btnAvaliar = new JButton("Avaliar");
+		btnAvaliar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int FilaSelect= table.getSelectedRow();
+				if(FilaSelect >=0) {
+					nomeRe = (String)table.getValueAt(table.getSelectedRow(), 0);
+					Tela_avaliacao exibir = new Tela_avaliacao();
+					exibir.setNomeRe(nomeRe);
+					exibir.setVisible(true);
+					
+					
+					setVisible(true);
+					
+				}
+				
+				
+			}
+		});
+		btnAvaliar.setBounds(327, 56, 89, 23);
+		contentPane.add(btnAvaliar);
 	}
 }
