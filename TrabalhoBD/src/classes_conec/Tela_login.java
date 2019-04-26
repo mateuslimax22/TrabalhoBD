@@ -155,7 +155,7 @@ public class Tela_login extends JFrame {
 				setVisible(false);
 			}
 		});
-		btnCadastrar.setBounds(117, 245, 103, 23);
+		btnCadastrar.setBounds(123, 245, 103, 23);
 		contentPane.add(btnCadastrar);
 		
 		JLabel label_2 = new JLabel("");

@@ -163,7 +163,7 @@ public class TelaCadastro extends JFrame {
 		 bg2.add(rdbtnAmador);
 		 bg2.add(rdbtnProfissional);
 		 	
-		JButton btnSalvar = new JButton("salvar");
+		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {

@@ -28,6 +28,7 @@ public class Tela_cadasReceita extends JFrame {
 	private JTable table;
 	private JTextField campesq;
 	private String nomeRe;
+	private JTable table_1;
 
 	/**
 	 * Launch the application.
@@ -57,8 +58,8 @@ public class Tela_cadasReceita extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Receitas");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 31));
-		lblNewLabel.setBounds(21, 12, 124, 33);
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		lblNewLabel.setBounds(21, 74, 124, 33);
 		contentPane.add(lblNewLabel);
 		
 		JButton NovaReceita = new JButton("Novo");
@@ -71,11 +72,11 @@ public class Tela_cadasReceita extends JFrame {
 				
 			}
 		});
-		NovaReceita.setBounds(21, 56, 97, 23);
+		NovaReceita.setBounds(21, 31, 97, 23);
 		contentPane.add(NovaReceita);
 		
 		JButton btnEditar = new JButton("Editar ");
-		btnEditar.setBounds(128, 56, 89, 23);
+		btnEditar.setBounds(128, 31, 89, 23);
 		contentPane.add(btnEditar);
 		
 		JButton btnExcluir = new JButton("Excluir");
@@ -94,11 +95,11 @@ public class Tela_cadasReceita extends JFrame {
 				}
 			}
 		});
-		btnExcluir.setBounds(227, 56, 89, 23);
+		btnExcluir.setBounds(227, 31, 89, 23);
 		contentPane.add(btnExcluir);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(36, 108, 303, 281);
+		scrollPane.setBounds(21, 112, 303, 281);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
@@ -112,7 +113,7 @@ public class Tela_cadasReceita extends JFrame {
 		scrollPane.setViewportView(table);
 		
 		campesq = new JTextField();
-		campesq.setBounds(426, 57, 168, 20);
+		campesq.setBounds(426, 32, 168, 20);
 		contentPane.add(campesq);
 		campesq.setColumns(10);
 		
@@ -149,7 +150,7 @@ public class Tela_cadasReceita extends JFrame {
 				
 			}
 		});
-		btnPesquisar.setBounds(604, 56, 89, 23);
+		btnPesquisar.setBounds(604, 31, 89, 23);
 		contentPane.add(btnPesquisar);
 		
 		JButton btnAvaliar = new JButton("Avaliar");
@@ -170,7 +171,26 @@ public class Tela_cadasReceita extends JFrame {
 				
 			}
 		});
-		btnAvaliar.setBounds(327, 56, 89, 23);
+		btnAvaliar.setBounds(327, 31, 89, 23);
 		contentPane.add(btnAvaliar);
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(370, 112, 303, 281);
+		contentPane.add(scrollPane_1);
+		
+		table_1 = new JTable();
+		table_1.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Nome", "Categoria"
+			}
+		));
+		scrollPane_1.setViewportView(table_1);
+		
+		JLabel lblSugestoDoDia = new JLabel("Sugest\u00E3o do dia");
+		lblSugestoDoDia.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		lblSugestoDoDia.setBounds(370, 81, 234, 27);
+		contentPane.add(lblSugestoDoDia);
 	}
 }

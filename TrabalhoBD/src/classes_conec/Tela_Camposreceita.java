@@ -12,6 +12,7 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JProgressBar;
 import javax.swing.JSlider;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JMenuBar;
 import java.awt.TextField;
@@ -21,6 +22,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
+import javax.swing.JRadioButton;
 
 public class Tela_Camposreceita extends JFrame {
 
@@ -29,6 +31,11 @@ public class Tela_Camposreceita extends JFrame {
 	private JTextField campoIngre;
 	private JTextField campoQuant;
 	private static String autor;
+	private static String principal="principal";
+	private static String entrada="entrada";
+	private static String sobremesa="sobremesa";
+	
+	private static ButtonGroup bg= new ButtonGroup();
 
 	/**
 	 * Launch the application.
@@ -131,6 +138,23 @@ public class Tela_Camposreceita extends JFrame {
 		campo_mod.setBounds(97, 178, 314, 108);
 		contentPane.add(campo_mod);
 		
+		
+		JRadioButton rdbtnEntrada = new JRadioButton("Entrada");
+		rdbtnEntrada.setBounds(208, 35, 65, 23);
+		contentPane.add(rdbtnEntrada);
+		
+		JRadioButton rdbtnPrincipal = new JRadioButton("Principal");
+		rdbtnPrincipal.setBounds(280, 35, 65, 23);
+		contentPane.add(rdbtnPrincipal);
+		
+		JRadioButton rdbtnSobremesa = new JRadioButton("Sobremesa");
+		rdbtnSobremesa.setBounds(348, 35, 109, 23);
+		contentPane.add(rdbtnSobremesa);
+		
+		bg.add(rdbtnEntrada);
+		bg.add(rdbtnPrincipal);
+		bg.add(rdbtnSobremesa);
+		
 		JButton btnSalvar = new JButton("Cadastrar");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -145,12 +169,40 @@ public class Tela_Camposreceita extends JFrame {
 					
 					stmt2.execute();
 					stmt2.close();
+					
+					
+					if(rdbtnEntrada.isSelected()) {
+						String sql5 ="INSERT INTO prato(nome,id_entrada) VALUES (?,?)";
+						PreparedStatement stmt5 = cone.prepareStatement(sql5);
+						stmt5.setString(1, campoNome.getText());
+						stmt5.setString(2, entrada);
+						stmt5.execute();	
+						stmt5.close();}
+		
+					
+					if(rdbtnPrincipal.isSelected()) {
+						String sql5 ="INSERT INTO prato(nome,id_principal) VALUES (?,?)";
+						PreparedStatement stmt5 = cone.prepareStatement(sql5);
+						stmt5.setString(1, campoNome.getText());
+						stmt5.setString(2, principal);
+						stmt5.execute();	
+						stmt5.close();}
+					
+					if(rdbtnSobremesa.isSelected()) {
+						String sql5 ="INSERT INTO prato(nome,id_sobremesa) VALUES (?,?)";
+						PreparedStatement stmt5 = cone.prepareStatement(sql5);
+						stmt5.setString(1, campoNome.getText());
+						stmt5.setString(2, sobremesa);
+						stmt5.execute();	
+						stmt5.close();}
+					
 					cone.close();
+				}
 					
 					
 					
 					
-				} catch (SQLException e) {
+				 catch (SQLException e) {
 					e.printStackTrace();
 				}
 				
@@ -159,7 +211,7 @@ public class Tela_Camposreceita extends JFrame {
 				
 			}
 		});
-		btnSalvar.setBounds(312, 71, 89, 23);
+		btnSalvar.setBounds(335, 80, 89, 23);
 		contentPane.add(btnSalvar);
 		
 		JLabel lblIngredientes = new JLabel("Ingredientes");
@@ -167,8 +219,8 @@ public class Tela_Camposreceita extends JFrame {
 		lblIngredientes.setBounds(10, 90, 162, 33);
 		contentPane.add(lblIngredientes);
 		
-		JButton btnFinalizar = new JButton("Finalizar");
-		btnFinalizar.addActionListener(new ActionListener() {
+		JButton btnFinalizar_1 = new JButton("Finalizar");
+		btnFinalizar_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Connection cone;
 				try {
@@ -191,8 +243,17 @@ public class Tela_Camposreceita extends JFrame {
 				
 			}
 		});
-		btnFinalizar.setBounds(335, 292, 89, 23);
-		contentPane.add(btnFinalizar);
+		btnFinalizar_1.setBounds(335, 292, 89, 23);
+		contentPane.add(btnFinalizar_1);
+		
+		JButton btnFinalizar = new JButton("Finalizar");
+		btnFinalizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			
+				
+			}
+		});
+		
 	}
 	
 	public void setAutor(String nome){
